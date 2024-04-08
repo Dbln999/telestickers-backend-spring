@@ -1,6 +1,7 @@
 package ee.telestickers.backend.order;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class OrderService {
         return orderDao.getOrderById(id);
     }
 
-    public void save(OrderAddRequest order) {
-        orderDao.addOrder(order);
+    public ResponseEntity<Order> save(OrderAddRequest order) {
+        return orderDao.addOrder(order);
     }
 
     public List<Order> getOrdersByUserTgId(Integer userId) {

@@ -5,6 +5,7 @@ import ee.telestickers.backend.customer.Customer;
 import ee.telestickers.backend.customer.CustomerRepository;
 import ee.telestickers.backend.sticker.Sticker;
 import ee.telestickers.backend.sticker.StickerRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,13 +26,14 @@ public class StickerPackServiceJpa implements StickerPackDao{
 
 
     @Override
-    public void assignStickersToStickerPack(OrderRecord order) {
+    public ResponseEntity<StickerPack> assignStickersToStickerPack(OrderRecord order) {
         List<Sticker> stickers = stickerRepository.findAllById(order.stickerIds());
         Customer customer = customerRepository.findCustomerByTgId(order.tgId());
         StickerPack stickerPack = new StickerPack();
         stickerPack.setStickers(stickers);
         stickerPack.setCustomer(customer);
         stickerPackRepository.save(stickerPack);
+        return ResponseEntity.ok(stickerPack);
     }
 
     @Override

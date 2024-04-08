@@ -47,6 +47,9 @@ public class Customer {
     private Countries country;
 
     @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)
@@ -68,7 +71,7 @@ public class Customer {
 
 
 
-    public Customer(Integer tgId, String firstname, String lastname, Countries country, String address, Integer postcode, String phoneNumber, String email) {
+    public Customer(Integer tgId, String firstname, String lastname, Countries country, String address, Integer postcode, String phoneNumber, String email, String city) {
         this.tgId = tgId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -77,6 +80,7 @@ public class Customer {
         this.postcode = postcode;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.city = city;
     }
 
     public Customer(Long id){

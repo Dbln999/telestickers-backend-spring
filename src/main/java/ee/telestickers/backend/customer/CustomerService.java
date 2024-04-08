@@ -3,6 +3,7 @@ package ee.telestickers.backend.customer;
 import ee.telestickers.backend.exception.RequestValidationException;
 import ee.telestickers.backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,15 +25,15 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException("Customer with id " + tgId + " not found"));
     }
 
-    public void addCustomer(CustomerAddRequest customerAddRequest) {
+    public ResponseEntity<Customer> addCustomer(CustomerAddRequest customerAddRequest) {
         Integer tgId = customerAddRequest.tgId();
 
         if(customerDao.existsCustomerWithTgId(tgId)) {
-            updateCustomer(tgId, customerAddRequest);
+            return updateCustomer(tgId, customerAddRequest);
         }
         else {
-            Customer customer = new Customer(customerAddRequest.tgId(), customerAddRequest.firstname(), customerAddRequest.lastname(), customerAddRequest.country(), customerAddRequest.address(), customerAddRequest.postcode(), customerAddRequest.phoneNumber(), customerAddRequest.email());
-            customerDao.insertCustomer(customer);
+            Customer customer = new Customer(customerAddRequest.tgId(), customerAddRequest.firstname(), customerAddRequest.lastname(), customerAddRequest.country(), customerAddRequest.address(), customerAddRequest.postcode(), customerAddRequest.phoneNumber(), customerAddRequest.email(), customerAddRequest.city());
+            return customerDao.insertCustomer(customer);
         }
 
 
@@ -42,7 +43,7 @@ public class CustomerService {
         return customerDao.findCustomerByOrderId(orderId);
     }
 
-    public void updateCustomer(Integer tgId, CustomerAddRequest customerAddRequest) {
+    public ResponseEntity<Customer> updateCustomer(Integer tgId, CustomerAddRequest customerAddRequest) {
         Customer customer = getCustomerByTgId(tgId);
         boolean changes = false;
 
@@ -85,7 +86,7 @@ public class CustomerService {
             throw new RequestValidationException("No customer changes found!");
         }
 
-        customerDao.updateCustomer(customer);
+        return customerDao.updateCustomer(customer);
     }
 
 

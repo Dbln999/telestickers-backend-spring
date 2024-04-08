@@ -4,6 +4,7 @@ import ee.telestickers.backend.customer.Customer;
 import ee.telestickers.backend.customer.CustomerService;
 import ee.telestickers.backend.stickerpack.StickerPack;
 import ee.telestickers.backend.stickerpack.StickerPackService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,11 +33,12 @@ public class OrderJPAService implements OrderDao{
     }
 
     @Override
-    public void addOrder(OrderAddRequest order) {
+    public ResponseEntity<Order> addOrder(OrderAddRequest order) {
         Customer customer = customerService.getCustomerByTgId(order.tgId());
         StickerPack stickerPack = stickerPackService.getStickerPack(order.stickerPackId());
         Order newOrder = new Order(customer, stickerPack, order.printfulId());
         orderRepository.save(newOrder);
+        return ResponseEntity.ok(newOrder);
     }
 
     @Override

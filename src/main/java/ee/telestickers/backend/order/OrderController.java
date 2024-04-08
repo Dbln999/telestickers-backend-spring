@@ -1,5 +1,6 @@
 package ee.telestickers.backend.order;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public void createOrder(@RequestBody OrderAddRequest order) {
-        orderService.save(order);
+    public ResponseEntity<Order> createOrder(@RequestBody OrderAddRequest order) {
+        return orderService.save(order);
     }
 }

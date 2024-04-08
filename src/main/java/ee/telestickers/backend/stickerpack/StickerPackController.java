@@ -1,5 +1,6 @@
 package ee.telestickers.backend.stickerpack;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class StickerPackController {
     }
 
     @PostMapping()
-    public void assignStickersToStickerPack(@RequestBody OrderRecord order) {
-        stickerPackService.assignStickersToStickerPack(order);
+    public ResponseEntity<StickerPack> assignStickersToStickerPack(@RequestBody OrderRecord order) {
+        return stickerPackService.assignStickersToStickerPack(order);
     }
 
     @GetMapping

@@ -1,6 +1,7 @@
 package ee.telestickers.backend.size;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class SizeService {
         return sizeDao.getSizeByStickerId(id);
     }
 
-    public void saveSize(SizeSaveRequest size) {
-        sizeDao.saveSizeToSticker(size);
+    public ResponseEntity<Size> saveSize(SizeSaveRequest size) {
+        return sizeDao.saveSizeToSticker(size);
     }
 }

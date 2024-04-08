@@ -4,6 +4,7 @@ import ee.telestickers.backend.order.Order;
 import ee.telestickers.backend.order.OrderRepository;
 import ee.telestickers.backend.sticker.Sticker;
 import ee.telestickers.backend.sticker.StickerRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,12 +34,12 @@ public class SizeJPAService implements SizeDao{
     }
 
     @Override
-    public void saveSizeToSticker(SizeSaveRequest save) {
+    public ResponseEntity<Size> saveSizeToSticker(SizeSaveRequest save) {
         Optional<Order> order = orderRepository.findById(save.orderId());
         List<Sticker> stickers = stickerRepository.findAllById(save.stickerId());
         Size size = new Size(save.size(), order.orElse(null), stickers);
         sizeRepository.save(size);
-
+        return ResponseEntity.ok(size);
     }
 
 

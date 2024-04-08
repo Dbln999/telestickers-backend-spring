@@ -13,19 +13,25 @@ services:
     networks:
       - db
     restart: unless-stopped
-  telestickers:
+  telestickers-api:
     container_name: telestickers-api
-    image: telestickers/api
+    image: dbln9/telestickers-api
     ports:
-      - "8088:8080"
+      - "8080:8080"
     networks:
       - db
     depends_on:
       - db
     restart: unless-stopped
-    command:
-      - --spring.datasource.url=jdbc:postgresql://db:5432/customer
-
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/telestickers
+  telestickers-bot-sql:
+    image: dbln9/telestickers-bot-sql
+    container_name: telestickers-bot-sql
+    depends_on:
+      - telestickers-api
+    networks:
+      - db
 
 networks:
   db:

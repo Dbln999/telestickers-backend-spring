@@ -1,5 +1,6 @@
 package ee.telestickers.backend.customer;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public void createCustomer(@RequestBody CustomerAddRequest customer) {
-        customerService.addCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerAddRequest customer) {
+        return customerService.addCustomer(customer);
     }
 
     @GetMapping("/order/{orderId}")
@@ -33,5 +34,9 @@ public class CustomerController {
         return customerService.findCustomerByOrderId(orderId);
     }
 
+    @PutMapping()
+    public ResponseEntity<Customer> updateCustomer(@RequestBody CustomerAddRequest customer) {
+        return customerService.updateCustomer(customer.tgId(), customer);
+    }
 
 }

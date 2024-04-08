@@ -1,5 +1,6 @@
 package ee.telestickers.backend.customer;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,13 +26,15 @@ public class CustomerJPAService implements CustomerDao{
     }
 
     @Override
-    public void insertCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public ResponseEntity<Customer> insertCustomer(Customer customer) {
+        Customer saved = customerRepository.save(customer);
+        return ResponseEntity.ok(saved);
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public ResponseEntity<Customer> updateCustomer(Customer customer) {
+        Customer saved = customerRepository.save(customer);
+        return ResponseEntity.ok(saved);
     }
 
     @Override

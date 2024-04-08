@@ -1,5 +1,6 @@
 package ee.telestickers.backend.sticker;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,8 +31,14 @@ public class StickerJPAService implements StickerDAO{
     }
 
     @Override
-    public void insertSticker(Sticker sticker) {
-        stickerRepository.save(sticker);
+    public ResponseEntity<Sticker> insertSticker(Sticker sticker) {
+        Sticker save = stickerRepository.save(sticker);
+        return ResponseEntity.ok(save);
+    }
+
+    @Override
+    public ResponseEntity<Sticker> getStickerByLink(String link) {
+        return ResponseEntity.ok(stickerRepository.findStickerByLink(link));
     }
 
     @Override

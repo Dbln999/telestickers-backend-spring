@@ -4,6 +4,7 @@ import ee.telestickers.backend.exception.DuplicateResourceException;
 import ee.telestickers.backend.exception.RequestValidationException;
 import ee.telestickers.backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +21,21 @@ public class StickerService {
         return stickerDAO.getAllStickers();
     }
 
-    public void addSticker(StickerAddRequest stickerAddRequest) {
+    public ResponseEntity<Sticker> addSticker(StickerAddRequest stickerAddRequest) {
         String link = stickerAddRequest.link();
         if(stickerDAO.existsStickerWithLink(link)) {
-            throw new DuplicateResourceException("sticker already in DB");
+            return stickerDAO.getStickerByLink(link);
         }
 
-        Sticker sticker = new Sticker(stickerAddRequest.link());
-        stickerDAO.insertSticker(sticker);
+        Sticker sticker = new Sticker(stickerAddRequest.link(), stickerAddRequest.googleLink());
+        return stickerDAO.insertSticker(sticker);
+    }
+
+    public ResponseEntity<Sticker> getStickerByLink(String link) {
+        if(stickerDAO.existsStickerWithLink(link)) {
+            return stickerDAO.getStickerByLink(link);
+        }
+        throw new ResourceNotFoundException("Sticker with link " + link + " not found");
     }
 
     public Sticker getSticker(Long id) {

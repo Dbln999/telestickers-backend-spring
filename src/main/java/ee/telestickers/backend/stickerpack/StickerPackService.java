@@ -2,6 +2,7 @@ package ee.telestickers.backend.stickerpack;
 
 import ee.telestickers.backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,8 @@ public class StickerPackService{
         this.stickerPackDao = stickerPackDao;
     }
 
-    public void assignStickersToStickerPack(OrderRecord order) {
-        stickerPackDao.assignStickersToStickerPack(order);
+    public ResponseEntity<StickerPack> assignStickersToStickerPack(OrderRecord order) {
+        return stickerPackDao.assignStickersToStickerPack(order);
     }
 
     public List<StickerPack> getStickerPacks() {

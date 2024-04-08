@@ -1,5 +1,6 @@
 package ee.telestickers.backend.sticker;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,14 +24,19 @@ public class StickerController {
         return stickerService.getStickerByIds(stickersIds);
     }
 
+    @PostMapping("/link")
+    public ResponseEntity<Sticker> getStickerByLink(@RequestBody StickerFindByLink stickerFindByLink) {
+        return stickerService.getStickerByLink(stickerFindByLink.link());
+    }
+
     @GetMapping("/{id}")
     public Sticker getSticker(@PathVariable Long id) {
         return stickerService.getSticker(id);
     }
 
     @PostMapping()
-    public void createSticker(@RequestBody StickerAddRequest sticker) {
-        stickerService.addSticker(sticker);
+    public ResponseEntity<Sticker> createSticker(@RequestBody StickerAddRequest sticker) {
+        return stickerService.addSticker(sticker);
     }
 
     @DeleteMapping("/{id}")

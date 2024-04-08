@@ -9,5 +9,6 @@ import java.util.List;
 public interface StickerRepository extends JpaRepository<Sticker, Long> {
     boolean existsStickerById(Long id);
     boolean existsStickerByLink(String link);
+    Sticker findStickerByLink(String link);
 }
 

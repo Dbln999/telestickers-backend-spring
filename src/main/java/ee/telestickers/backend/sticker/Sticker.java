@@ -29,9 +29,13 @@ public class Sticker {
     @Column(nullable = false)
     private String link;
 
+    @Column(nullable = false)
+    private String googleLink;
 
 
-    public Sticker (String link) {
+
+    public Sticker (String link, String googleLink) {
         this.link = link;
+        this.googleLink = googleLink;
     }
 }

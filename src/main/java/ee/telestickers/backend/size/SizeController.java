@@ -1,5 +1,6 @@
 package ee.telestickers.backend.size;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class SizeController {
     }
 
     @PostMapping
-    public void createSize(@RequestBody SizeSaveRequest size) {
-        sizeService.saveSize(size);
+    public ResponseEntity<Size> createSize(@RequestBody SizeSaveRequest size) {
+        return sizeService.saveSize(size);
     }
 }
